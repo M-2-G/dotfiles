@@ -15,11 +15,8 @@ return {
                     "docker_compose_language_service",
                     "gradle_ls",
                     "gopls",
-                    "graphql",
                     "html",
                     "jsonls",
-                    "jdtls",
-                    "rust_analyzer"
                 }
             })
         end
