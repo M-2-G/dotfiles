@@ -19,8 +19,9 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 # CLI enhancements
 alias ls="ls --color=always"
-alias ll="ls -la --color=always"
+alias ll="ls -larht --color=always"
 
 
 
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(starship init zsh)"
