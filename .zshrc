@@ -17,10 +17,13 @@ compinit
 # PATH setup
 export PATH="/opt/homebrew/bin:$PATH"
 
+# Editor settings (use nvim if available)
+export EDITOR=nvim
+
 # CLI enhancements
 alias ls="ls --color=always"
 alias ll="ls -larht --color=always"
-
+alias zshrc="$EDITOR ~/.zshrc"
 
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
