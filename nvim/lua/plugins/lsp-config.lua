@@ -17,6 +17,7 @@ return {
 					"gopls",
 					"html",
 					"jsonls",
+                    "jdtls",
 				},
 			})
 		end,
