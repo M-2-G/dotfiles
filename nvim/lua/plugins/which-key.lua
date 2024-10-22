@@ -16,6 +16,7 @@ return {
 				{ "<leader>d", group = "[D]ebug" },
 				{ "<leader>f", group = "[F]ind" },
 				{ "<leader>t", group = "[T]ree" },
+                { "<leader>b", group = "[B]uffer" },
 			},
 		})
 	end,
