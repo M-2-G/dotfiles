@@ -17,6 +17,7 @@ return {
 				{ "<leader>f", group = "[F]ind" },
 				{ "<leader>t", group = "[T]ree" },
                 { "<leader>b", group = "[B]uffer" },
+                { "<leader>g", group = "[G]it" },
 			},
 		})
 	end,

@@ -13,12 +13,9 @@ return {
                     "lua_ls",
                     "dockerls",
                     "docker_compose_language_service",
-                    "gradle_ls",
-                    "gopls",
                     "html",
                     "ts_ls",
                     "jsonls",
-                    "jdtls",
                     "pyright",
                     "ruff",
                 },
@@ -39,10 +36,7 @@ return {
             lspconfig.lua_ls.setup({
                 capabilities = capabilities,
             })
-            lspconfig.gopls.setup({
-                capabilities = capabilities,
-            })
-            lspconfig.ruff.setup({
+	    lspconfig.ruff.setup({
                 capabilities = capabilities,
             })
             lspconfig.pyright.setup({
