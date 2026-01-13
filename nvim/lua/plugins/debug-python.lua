@@ -12,7 +12,7 @@ return {
 			function()
 				require("dap-python").test_method()
 			end,
-			desc = "[D]ebug [P]ython Test Method",
+			desc = "[d]ebug [p]ython Test Method",
 		},
 		{
 			mode = "n",
@@ -20,7 +20,7 @@ return {
 			function()
 				require("dap-python").test_class()
 			end,
-			desc = "[D]ebug [P]ython Test [C]lass",
+			desc = "[d]ebug [p]ython Test [c]lass",
 		},
 	},
 	config = function()

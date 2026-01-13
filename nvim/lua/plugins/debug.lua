@@ -4,10 +4,20 @@ return {
 		"rcarriga/nvim-dap-ui",
 		"nvim-neotest/nvim-nio",
 		"theHamsta/nvim-dap-virtual-text",
+        "williamboman/mason.nvim",
+        "jay-babu/mason-nvim-dap.nvim",
 	},
 	config = function()
 		local dap, dapui = require("dap"), require("dapui")
-		dapui.setup()
+        require("mason-nvim-dap").setup({
+            ensure_installed = { "codelldb" },
+            handlers = {
+                function(config)
+                    require('mason-nvim-dap').default_setup(config)
+                end,
+            },
+        })
+        dapui.setup()
        -- require("dap").set_log_level("TRACE")
 
 		dap.listeners.before.attach.dapui_config = function()
@@ -25,19 +35,19 @@ return {
 
 		vim.keymap.set("n", "<Leader>dc", function()
 			dap.continue()
-		end, { desc = "[D]ebug [C]ontinue" })
+		end, { desc = "[d]ebug [c]ontinue" })
 		vim.keymap.set("n", "<Leader>do", function()
 			dap.step_over()
-		end, { desc = "[D]ebug [O]ver" })
+		end, { desc = "[d]ebug [o]ver" })
 		vim.keymap.set("n", "<Leader>di", function()
 			dap.step_into()
-		end, { desc = "[D]ebug [I]nto" })
+		end, { desc = "[d]ebug [i]nto" })
 		vim.keymap.set("n", "<Leader>dt", function()
 			dap.step_out()
-		end, { desc = "[D]ebug ou[T]" })
+		end, { desc = "[d]ebug ou[t]" })
 		vim.keymap.set("n", "<Leader>db", function()
 			dap.toggle_breakpoint()
-		end, { desc = "[D]ebug [B]reakpoint" })
+		end, { desc = "[d]ebug [b]reakpoint" })
 		dap.configurations.java = {
 			{
 				name = "Debug Launch (2GB)",

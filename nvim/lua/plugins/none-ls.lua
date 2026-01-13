@@ -9,6 +9,6 @@ return {
                 null_ls.builtins.diagnostics.pylint,
 			},
 		})
-		vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, { desc = "[B]uffer [F]ormat" })
+		vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, { desc = "[b]uffer [f]ormat" })
 	end,
 }

@@ -1,6 +1,6 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=2000
+HISTSIZE=10000
 SAVEHIST=50000
 setopt notify
 # bindkey -v

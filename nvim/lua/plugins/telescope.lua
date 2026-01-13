@@ -5,11 +5,11 @@ return {
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             local telescopeBuiltin = require("telescope.builtin")
-            vim.keymap.set("n", "<leader>ff", telescopeBuiltin.find_files, { desc = "[F]ind [F]iles" })
-            vim.keymap.set("n", "<leader>fg", telescopeBuiltin.live_grep, { desc = "[F]ind by [G]rep" })
-            vim.keymap.set("n", "<leader>fd", telescopeBuiltin.diagnostics, { desc = "[F]ind [D]iagnostics using LSP" })
-            vim.keymap.set("n", "<leader>fr", telescopeBuiltin.resume, { desc = "[F]ind [R]esume search" })
-            vim.keymap.set("n", "<leader>fb", telescopeBuiltin.buffers, { desc = "[F]ind in open [B]uffers" })
+            vim.keymap.set("n", "<leader>ff", telescopeBuiltin.find_files, { desc = "[f]ind [f]iles" })
+            vim.keymap.set("n", "<leader>fg", telescopeBuiltin.live_grep, { desc = "[f]ind by [g]rep" })
+            vim.keymap.set("n", "<leader>fd", telescopeBuiltin.diagnostics, { desc = "[f]ind [d]iagnostics using LSP" })
+            vim.keymap.set("n", "<leader>fr", telescopeBuiltin.resume, { desc = "[f]ind [r]esume search" })
+            vim.keymap.set("n", "<leader>fb", telescopeBuiltin.buffers, { desc = "[f]ind in open [b]uffers" })
         end,
     },
     {
