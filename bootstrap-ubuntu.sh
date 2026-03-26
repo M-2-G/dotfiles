@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+i#!/usr/bin/env bash
 set -e
 
 DOTFILES_DIR="$HOME/.dotfiles"
@@ -12,7 +12,7 @@ echo "=========================================="
 # 1. System packages
 # ------------------------------------------
 echo ""
-echo "[1/9] Installing system packages..."
+echo "[1/10] Installing system packages..."
 sudo apt-get update -qq
 sudo apt-get install -y \
     git \
@@ -22,13 +22,18 @@ sudo apt-get install -y \
     ripgrep \
     unzip \
     wget \
-    build-essential
+    build-essential \
+    python3 \
+    python3-pip
+
+# Symlink python -> python3 so tools like Mason can find it
+sudo ln -sf /usr/bin/python3 /usr/bin/python
 
 # ------------------------------------------
 # 2. Node.js via nvm (apt version is too old for nvim plugins)
 # ------------------------------------------
 echo ""
-echo "[2/9] Installing nvm and Node.js LTS..."
+echo "[2/10] Installing nvm and Node.js LTS..."
 export NVM_DIR="$HOME/.nvm"
 if [ ! -d "$NVM_DIR" ]; then
     curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -45,10 +50,18 @@ nvm alias default "lts/*"
 echo "  node $(node --version) / npm $(npm --version) installed"
 
 # ------------------------------------------
-# 3. Neovim
+# 3. uv (Python package manager)
 # ------------------------------------------
 echo ""
-echo "[3/9] Installing Neovim (latest stable)..."
+echo "[3/10] Installing uv..."
+curl -fsSL https://astral.sh/uv/install.sh | sh
+echo "  uv installed"
+
+# ------------------------------------------
+# 4. Neovim
+# ------------------------------------------
+echo ""
+echo "[4/10] Installing Neovim..."
 NVIM_VERSION="v0.11.5"
 NVIM_URL="https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-x86_64.tar.gz"
 
@@ -58,17 +71,17 @@ rm /tmp/nvim.tar.gz
 echo "  nvim $(nvim --version | head -1) installed"
 
 # ------------------------------------------
-# 4. Starship prompt
+# 5. Starship prompt
 # ------------------------------------------
 echo ""
-echo "[4/9] Installing Starship prompt..."
+echo "[5/10] Installing Starship prompt..."
 curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
 
 # ------------------------------------------
-# 5. zsh-syntax-highlighting
+# 6. zsh-syntax-highlighting
 # ------------------------------------------
 echo ""
-echo "[5/9] Installing zsh-syntax-highlighting..."
+echo "[6/10] Installing zsh-syntax-highlighting..."
 ZSH_SYNTAX_DIR="$HOME/.zsh/zsh-syntax-highlighting"
 if [ ! -d "$ZSH_SYNTAX_DIR" ]; then
     git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_SYNTAX_DIR"
@@ -77,10 +90,10 @@ else
 fi
 
 # ------------------------------------------
-# 6. Clone dotfiles
+# 7. Clone dotfiles
 # ------------------------------------------
 echo ""
-echo "[6/9] Cloning dotfiles..."
+echo "[7/10] Cloning dotfiles..."
 if [ ! -d "$DOTFILES_DIR" ]; then
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
 else
@@ -89,10 +102,10 @@ else
 fi
 
 # ------------------------------------------
-# 7. Symlink dotfiles
+# 8. Symlink dotfiles
 # ------------------------------------------
 echo ""
-echo "[7/9] Creating symlinks..."
+echo "[8/10] Creating symlinks..."
 
 symlink() {
     local src="$1"
@@ -141,6 +154,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+# uv
+export PATH="$HOME/.local/bin:$PATH"
+
 # zsh-syntax-highlighting (Linux path, not Homebrew)
 source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
@@ -151,10 +167,10 @@ EOF
 echo "  Created Linux-adapted ~/.zshrc"
 
 # ------------------------------------------
-# 8. Set zsh as default shell
+# 9. Set zsh as default shell
 # ------------------------------------------
 echo ""
-echo "[8/9] Setting zsh as default shell..."
+echo "[9/10] Setting zsh as default shell..."
 if [ "$SHELL" != "$(which zsh)" ]; then
     chsh -s "$(which zsh)"
     echo "  Default shell changed to zsh. Re-login to take effect."
@@ -163,10 +179,10 @@ else
 fi
 
 # ------------------------------------------
-# 9. Install Claude Code
+# 10. Install Claude Code
 # ------------------------------------------
 echo ""
-echo "[9/9] Installing Claude Code..."
+echo "[10/10] Installing Claude Code..."
 curl -fsSL https://claude.ai/install.sh | bash
 
 echo ""
