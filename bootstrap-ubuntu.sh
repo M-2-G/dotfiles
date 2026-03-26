@@ -1,4 +1,4 @@
-i#!/usr/bin/env bash
+#!/usr/bin/env bash
 set -e
 
 DOTFILES_DIR="$HOME/.dotfiles"
@@ -24,7 +24,8 @@ sudo apt-get install -y \
     wget \
     build-essential \
     python3 \
-    python3-pip
+    python3-pip \
+    python3-venv
 
 # Symlink python -> python3 so tools like Mason can find it
 sudo ln -sf /usr/bin/python3 /usr/bin/python
