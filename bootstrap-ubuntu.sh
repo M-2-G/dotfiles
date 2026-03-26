@@ -12,7 +12,7 @@ echo "=========================================="
 # 1. System packages
 # ------------------------------------------
 echo ""
-echo "[1/6] Installing system packages..."
+echo "[1/8] Installing system packages..."
 sudo apt-get update -qq
 sudo apt-get install -y \
     git \
@@ -25,11 +25,31 @@ sudo apt-get install -y \
     build-essential
 
 # ------------------------------------------
-# 2. Neovim 
+# 2. Node.js via nvm (apt version is too old for nvim plugins)
 # ------------------------------------------
 echo ""
-echo "[2/6] Installing Neovim (latest stable)..."
-NVIM_VERSION="v0.10.3"
+echo "[2/8] Installing nvm and Node.js LTS..."
+export NVM_DIR="$HOME/.nvm"
+if [ ! -d "$NVM_DIR" ]; then
+    curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+else
+    echo "  nvm already installed, skipping."
+fi
+ 
+# Load nvm so we can use it immediately in this script
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+ 
+nvm install --lts
+nvm use --lts
+nvm alias default "lts/*"
+echo "  node $(node --version) / npm $(npm --version) installed"
+
+# ------------------------------------------
+# 3. Neovim 
+# ------------------------------------------
+echo ""
+echo "[3/8] Installing Neovim (latest stable)..."
+NVIM_VERSION="v0.11.5"
 NVIM_URL="https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-x86_64.tar.gz"
 
 wget -q "$NVIM_URL" -O /tmp/nvim.tar.gz
@@ -38,17 +58,17 @@ rm /tmp/nvim.tar.gz
 echo "  nvim $(nvim --version | head -1) installed"
 
 # ------------------------------------------
-# 3. Starship prompt
+# 4. Starship prompt
 # ------------------------------------------
 echo ""
-echo "[3/6] Installing Starship prompt..."
+echo "[4/6] Installing Starship prompt..."
 curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
 
 # ------------------------------------------
-# 4. zsh-syntax-highlighting
+# 5. zsh-syntax-highlighting
 # ------------------------------------------
 echo ""
-echo "[4/6] Installing zsh-syntax-highlighting..."
+echo "[5/8] Installing zsh-syntax-highlighting..."
 ZSH_SYNTAX_DIR="$HOME/.zsh/zsh-syntax-highlighting"
 if [ ! -d "$ZSH_SYNTAX_DIR" ]; then
     git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_SYNTAX_DIR"
@@ -57,10 +77,10 @@ else
 fi
 
 # ------------------------------------------
-# 5. Clone dotfiles
+# 6. Clone dotfiles
 # ------------------------------------------
 echo ""
-echo "[5/6] Cloning dotfiles..."
+echo "[6/8] Cloning dotfiles..."
 if [ ! -d "$DOTFILES_DIR" ]; then
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
 else
@@ -69,10 +89,10 @@ else
 fi
 
 # ------------------------------------------
-# 6. Symlink dotfiles
+# 7. Symlink dotfiles
 # ------------------------------------------
 echo ""
-echo "[6/6] Creating symlinks..."
+echo "[7/8] Creating symlinks..."
 
 symlink() {
     local src="$1"
@@ -126,7 +146,7 @@ EOF
 echo "  Created Linux-adapted ~/.zshrc"
 
 # ------------------------------------------
-# 7. Set zsh as default shell
+# 8. Set zsh as default shell
 # ------------------------------------------
 echo ""
 echo "Setting zsh as default shell..."
@@ -141,7 +161,7 @@ fi
 # 8. Install Claude Code
 # ------------------------------------------
 echo ""
-echo "Installing Claude Code..."
+echo "[8/8] Installing Claude Code..."
 curl -fsSL https://claude.ai/install.sh | bash
 
 echo ""
