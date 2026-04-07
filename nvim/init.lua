@@ -11,6 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 vim.g.python3_host_prog = "~/dev/py_venv/bin/python"
+vim.opt.swapfile = false
 
 require("vim-settings")
 require("lazy").setup("plugins")
