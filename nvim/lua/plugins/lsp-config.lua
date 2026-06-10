@@ -32,6 +32,18 @@ return {
                 config = config or {}
                 -- Merge capabilities with any existing capabilities in the config
                 config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
+
+                -- Merge on_attach so navic is always attached
+                local existing_on_attach = config.on_attach
+                config.on_attach = function(client, bufnr)
+                    if client.server_capabilities.documentSymbolProvider then
+                        require("nvim-navic").attach(client, bufnr)
+                    end
+                    if existing_on_attach then
+                        existing_on_attach(client, bufnr)
+                    end
+                end
+
                 -- Assign config to the native Neovim table
                 vim.lsp.config[server_name] = config
                 -- Enable the server (starts it for the current buffer & sets up filetype hooks)
