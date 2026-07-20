@@ -10,7 +10,7 @@ return {
 	config = function()
 		local dap, dapui = require("dap"), require("dapui")
         require("mason-nvim-dap").setup({
-            ensure_installed = { "codelldb" },
+            ensure_installed = { "codelldb", "netcoredbg" },
             handlers = {
                 function(config)
                     require('mason-nvim-dap').default_setup(config)
@@ -97,6 +97,34 @@ return {
 				end,
 				cwd = "${workspaceFolder}",
 				stopOnEntry = false,
+			},
+		}
+
+		-- .NET / C# debugging via netcoredbg (installed by mason-nvim-dap above).
+		local mason_bin = vim.fn.stdpath("data") .. "/mason/bin/netcoredbg"
+		dap.adapters.coreclr = {
+			type = "executable",
+			command = mason_bin,
+			args = { "--interpreter=vscode" },
+		}
+		dap.configurations.cs = {
+			{
+				type = "coreclr",
+				name = "launch - netcoredbg",
+				request = "launch",
+				program = function()
+					-- Point this at the built DLL, e.g. bin/Debug/net8.0/xxx.dll
+					return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/bin/Debug/", "file")
+				end,
+				cwd = "${workspaceFolder}",
+				stopAtEntry = false,
+			},
+			{
+				type = "coreclr",
+				name = "attach - netcoredbg",
+				request = "attach",
+				processId = require("dap.utils").pick_process,
+				cwd = "${workspaceFolder}",
 			},
 		}
 	end,

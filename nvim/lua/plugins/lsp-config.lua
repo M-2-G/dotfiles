@@ -3,6 +3,17 @@ return {
         "williamboman/mason.nvim",
         config = function()
             require("mason").setup()
+
+            local registry = require("mason-registry")
+            local ensure = { "roslyn-language-server", "csharpier", "netcoredbg" }
+            registry.refresh(function()
+                for _, name in ipairs(ensure) do
+                    local ok, pkg = pcall(registry.get_package, name)
+                    if ok and not pkg:is_installed() then
+                        pkg:install()
+                    end
+                end
+            end)
         end,
     },
     {
