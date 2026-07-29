@@ -20,6 +20,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
+                automatic_enable = { exclude = { "roslyn_ls" } },
                 ensure_installed = {
                     "lua_ls",
                     "dockerls",
