@@ -3,6 +3,8 @@ return {
     "lewis6991/gitsigns.nvim",
     config = function ()
         require("gitsigns").setup()
+        vim.keymap.set("n", "<leader>gn",  ":Gitsigns next_hunk<CR>", {desc = "[g]it [n]ext hunk"})
+        vim.keymap.set("n", "<leader>gN",  ":Gitsigns prev_hunk<CR>", {desc = "[g]it prev hunk [N]"})
         vim.keymap.set("n", "<leader>gp",  ":Gitsigns preview_hunk<CR>", {desc = "[g]it [p]review hunk"})
         vim.keymap.set("n", "<leader>gbl", ":Gitsigns toggle_current_line_blame<CR>", {desc = "[g]it [b]lame [l]ine"})
         vim.keymap.set("n", "<leader>gbf", ":Gitsigns blame<CR>", {desc = "[g]it [b]lame [f]ile"})
