@@ -185,11 +185,11 @@ echo "  Created Linux-adapted ~/.zshrc"
 # ------------------------------------------
 # 9. Set zsh as default shell
 # ------------------------------------------
-echo ""
-echo "[9/10] Setting zsh as default shell..."
-if [ "$SHELL" != "$(which zsh)" ]; then
-    chsh -s "$(which zsh)"
-    echo "  Default shell changed to zsh. Re-login to take effect."
+ZSH_PATH="$(which zsh)"
+
+if [ "$SHELL" != "$ZSH_PATH" ]; then
+    sudo usermod -s "$ZSH_PATH" "$USER"
+    echo "  Default shell changed to zsh for $USER."
 else
     echo "  zsh is already the default shell."
 fi
