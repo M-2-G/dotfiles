@@ -91,7 +91,8 @@ echo "  nvim $(nvim --version | head -1) installed"
 # ------------------------------------------
 echo ""
 echo "[5/10] Installing Starship prompt..."
-curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
+mkdir -p "$HOME/.local/bin"
+curl -sS https://starship.rs/install.sh | sh -s -- -b "$HOME/.local/bin" -y
 
 # ------------------------------------------
 # 6. zsh-syntax-highlighting
