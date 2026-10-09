@@ -63,14 +63,29 @@ echo "  uv installed"
 # ------------------------------------------
 echo ""
 echo "[4/10] Installing Neovim..."
-NVIM_VERSION="v0.11.5"
-NVIM_URL="https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-x86_64.tar.gz"
+ARCH=$(uname -m)
+if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+    NVIM_ARCH="arm64"
+else
+    NVIM_ARCH="x86_64"
+fi
+
+NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-${NVIM_ARCH}.tar.gz"
 
 wget -q "$NVIM_URL" -O /tmp/nvim.tar.gz
-sudo tar -xzf /tmp/nvim.tar.gz -C /usr/local --strip-components=1
-rm /tmp/nvim.tar.gz
-echo "  nvim $(nvim --version | head -1) installed"
 
+mkdir -p "$HOME/.local"
+rm -rf "$HOME/.local/nvim"
+tar -xzf /tmp/nvim.tar.gz -C "$HOME/.local"
+
+mv "$HOME/.local/nvim-linux-${NVIM_ARCH}" "$HOME/.local/nvim"
+
+# Symlink to ~/.local/bin which is already in the PATH
+mkdir -p "$HOME/.local/bin"
+ln -sf "$HOME/.local/nvim/bin/nvim" "$HOME/.local/bin/nvim"
+rm /tmp/nvim.tar.gz
+
+echo "  nvim $(nvim --version | head -1) installed"
 # ------------------------------------------
 # 5. Starship prompt
 # ------------------------------------------
