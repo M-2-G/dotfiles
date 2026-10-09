@@ -50,6 +50,10 @@ nvm use --lts
 nvm alias default "lts/*"
 echo "  node $(node --version) / npm $(npm --version) installed"
 
+# tree-sitter CLI (needed by nvim-treesitter to compile parsers)
+npm install -g tree-sitter-cli
+echo "  tree-sitter $(tree-sitter --version) installed"
+
 # ------------------------------------------
 # 3. uv (Python package manager)
 # ------------------------------------------
