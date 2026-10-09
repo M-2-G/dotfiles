@@ -23,6 +23,8 @@ sudo apt-get install -y \
     unzip \
     wget \
     build-essential \
+    pkg-config \
+    libssl-dev \
     python3 \
     python3-pip \
     python3-venv
@@ -61,6 +63,22 @@ echo ""
 echo "[3/10] Installing uv..."
 curl -fsSL https://astral.sh/uv/install.sh | sh
 echo "  uv installed"
+
+# ------------------------------------------
+# 3b. Rust toolchain (rustup)
+# ------------------------------------------
+echo ""
+echo "Installing Rust toolchain via rustup..."
+# Limit rustup's memory use so the unpack isn't OOM-killed in small containers
+export RUSTUP_IO_THREADS=1 RUSTUP_UNPACK_RAM=134217728
+if [ ! -x "$HOME/.cargo/bin/rustup" ]; then
+    curl -fsSL https://sh.rustup.rs | sh -s -- -y --profile minimal --no-modify-path
+fi
+# clippy: rust-analyzer check command; rustfmt: formatting; rust-src: std navigation
+"$HOME/.cargo/bin/rustup" toolchain install stable --profile minimal \
+    -c clippy -c rustfmt -c rust-src
+"$HOME/.cargo/bin/rustup" default stable
+echo "  $("$HOME/.cargo/bin/rustc" --version) installed"
 
 # ------------------------------------------
 # 4. Neovim
@@ -177,6 +195,9 @@ export NVM_DIR="$HOME/.nvm"
 
 # uv
 export PATH="$HOME/.local/bin:$PATH"
+
+# Rust (cargo, rustc, rustup)
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # zsh-syntax-highlighting (Linux path, not Homebrew)
 source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
