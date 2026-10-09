@@ -186,14 +186,14 @@ echo "  Created Linux-adapted ~/.zshrc"
 # 9. Set zsh as default shell
 # ------------------------------------------
 ZSH_PATH="$(which zsh)"
+TARGET_USER="${USER:-$(whoami)}"
 
 if [ "$SHELL" != "$ZSH_PATH" ]; then
-    sudo usermod -s "$ZSH_PATH" "$USER"
-    echo "  Default shell changed to zsh for $USER."
+    sudo usermod -s "$ZSH_PATH" "$TARGET_USER"
+    echo "  Default shell changed to zsh for $TARGET_USER."
 else
     echo "  zsh is already the default shell."
 fi
-
 # ------------------------------------------
 # 10. Install Claude Code
 # ------------------------------------------
